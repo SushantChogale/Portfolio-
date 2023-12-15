@@ -1,4 +1,4 @@
---I am using 1 year data from 10/2022 to 11/2023 for my anayisis 
+--I am using 1 year 2 months data from 10/2022 to 11/2023 for my anayisis 
  --they were seperate csv file for each month but i have merged them into one
  -- by using union all clause
 
