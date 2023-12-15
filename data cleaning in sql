@@ -1,0 +1,75 @@
+--I am using 1 year data from 10/2022 to 11/2023 for my anayisis 
+ --they were seperate csv file for each month but i have merged them into one
+ -- by using union all clause
+
+SELECT *
+FROM data_11
+UNION ALL
+SELECT *
+FROM data_12
+UNION ALL
+SELECT *
+FROM data_01
+UNION ALL
+SELECT *
+FROM data_02
+UNION ALL
+SELECT *
+FROM data_03
+UNION ALL
+SELECT *
+FROM data_04
+UNION ALL
+SELECT *
+FROM data_05
+UNION ALL
+SELECT *
+FROM data_06
+UNION ALL
+SELECT *
+FROM data_07
+UNION ALL
+SELECT *
+FROM data_08
+UNION ALL
+SELECT *
+FROM data_09
+UNION ALL
+SELECT *
+FROM data_1023
+
+-- filtering out duplicate, null values and columns 
+
+with clean_data (SELECT DISTINCT(ride_id),
+		rideable_type,
+		started_at,
+		ended_at,
+		start_station_name,
+		start_station_id,
+		end_station_name,
+		end_station_id,
+		member_casual
+FROM merged_data
+WHERE ride_id is not NULL AND
+		rideable_type is not NULL AND
+		started_at is NOT NULL AND
+		ended_at is NOT NULL AND
+		start_station_name is NOT NULL AND
+		start_station_id is NOT NULL AND
+		end_station_name is NOT NULL AND
+		end_station_id is not NULL AND
+		member_casual is not NULL )
+
+		
+-- Extraction of duration time in minutes, day of week and month
+
+SELECT *, 
+		(julianday(ended_at) - julianday(started_at))* 1440 as trip_duration_in_minutes,
+		strftime('%w', started_at ) as day_of_week,
+		strftime('%m', started_at) as month
+from clean_data
+
+-- Explore the data
+
+select *
+from clean_data
